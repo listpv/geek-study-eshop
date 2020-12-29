@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.geekbrains.controller.repr.UserRepr;
+import ru.geekbrains.controller.data.UserData;
 import ru.geekbrains.error.NotFoundException;
 import ru.geekbrains.persist.repo.RoleRepository;
+import ru.geekbrains.service.RoleService;
 import ru.geekbrains.service.UserService;
 
 import javax.validation.Valid;
@@ -18,14 +19,14 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     private final UserService userService;
 
     @Autowired
-    public UserController(RoleRepository roleRepository,
+    public UserController(RoleService roleService,
                           UserService userService) {
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
         this.userService = userService;
     }
 
@@ -46,7 +47,7 @@ public class UserController {
         model.addAttribute("edit", true);
         model.addAttribute("activePage", "Users");
         model.addAttribute("user", userService.findById(id).orElseThrow(NotFoundException::new));
-        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("roles", roleService.findAll());
         return "user_form";
     }
 
@@ -54,13 +55,13 @@ public class UserController {
     public String adminCreateUser(Model model) {
         model.addAttribute("create", true);
         model.addAttribute("activePage", "Users");
-        model.addAttribute("user", new UserRepr());
-        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("user", new UserData());
+        model.addAttribute("roles",roleService.findAll());
         return "user_form";
     }
 
     @PostMapping("/user")
-    public String adminUpsertUser(@Valid UserRepr user, Model model, BindingResult bindingResult) {
+    public String adminUpsertUser(@Valid UserData user, Model model, BindingResult bindingResult) {
         model.addAttribute("activePage", "Users");
 
         if (bindingResult.hasErrors()) {
@@ -77,9 +78,10 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/roles")
-    public String adminRolesPage(Model model) {
-        model.addAttribute("activePage", "Roles");
-        return "index";
-    }
+//    @GetMapping("/roles")
+//    public String adminRolesPage(Model model) {
+//        model.addAttribute("activePage", "Roles");
+//        model.addAttribute("roles", roleService.findAll());
+//        return "roles";
+//    }
 }

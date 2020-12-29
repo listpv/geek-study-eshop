@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.geekbrains.controller.repr.UserRepr;
+import ru.geekbrains.controller.data.UserData;
 import ru.geekbrains.persist.model.User;
 import ru.geekbrains.persist.repo.UserRepository;
 
@@ -26,28 +26,28 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void save(UserRepr userRepr) {
+    public void save(UserData userData) {
         User user = new User();
-        user.setId(userRepr.getId());
-        user.setName(userRepr.getUsername());
-        user.setPassword(passwordEncoder.encode(userRepr.getPassword()));
-        user.setEmail(userRepr.getEmail());
-        user.setFirstName(userRepr.getFirstName());
-        user.setLastName(userRepr.getLastName());
-        user.setRoles(userRepr.getRoles());
+        user.setId(userData.getId());
+        user.setName(userData.getUsername());
+        user.setPassword(passwordEncoder.encode(userData.getPassword()));
+        user.setEmail(userData.getEmail());
+        user.setFirstName(userData.getFirstName());
+        user.setLastName(userData.getLastName());
+        user.setRoles(userData.getRoles());
         userRepository.save(user);
     }
 
     @Override
-    public List<UserRepr> findAll() {
+    public List<UserData> findAll() {
         return userRepository.findAll().stream()
-                .map(UserRepr::new)
+                .map(UserData::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserRepr> findById(Long id) {
-        return userRepository.findById(id).map(UserRepr::new);
+    public Optional<UserData> findById(Long id) {
+        return userRepository.findById(id).map(UserData::new);
     }
 
     @Override

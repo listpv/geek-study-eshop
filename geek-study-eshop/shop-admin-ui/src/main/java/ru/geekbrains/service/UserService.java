@@ -1,17 +1,17 @@
 package ru.geekbrains.service;
 
-import ru.geekbrains.controller.repr.UserRepr;
+import ru.geekbrains.controller.data.UserData;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
-    void save(UserRepr userRepr);
+    void save(UserData userData);
 
-    List<UserRepr> findAll();
+    List<UserData> findAll();
 
-    Optional<UserRepr> findById(Long id);
+    Optional<UserData> findById(Long id);
 
     void delete(Long id);
 }

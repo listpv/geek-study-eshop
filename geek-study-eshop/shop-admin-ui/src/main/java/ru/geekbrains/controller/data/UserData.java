@@ -1,4 +1,4 @@
-package ru.geekbrains.controller.repr;
+package ru.geekbrains.controller.data;
 
 import ru.geekbrains.persist.model.Role;
 import ru.geekbrains.persist.model.User;
@@ -6,7 +6,7 @@ import ru.geekbrains.persist.model.User;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-public class UserRepr {
+public class UserData {
 
     private Long id;
 
@@ -24,10 +24,10 @@ public class UserRepr {
 
     private Set<Role> roles;
 
-    public UserRepr() {
+    public UserData() {
     }
 
-    public UserRepr(User user) {
+    public UserData(User user) {
         this.id = user.getId();
         this.username = user.getName();
         this.password = user.getPassword();

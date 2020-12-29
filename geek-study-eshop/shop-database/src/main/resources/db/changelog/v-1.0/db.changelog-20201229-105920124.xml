@@ -16,8 +16,8 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK"/>
             </column>
             <column name="email" type="VARCHAR(255)"/>
-            <column name="firstName" type="VARCHAR(32)"/>
-            <column name="lastName" type="VARCHAR(32)"/>
+            <column name="first_name" type="VARCHAR(32)"/>
+            <column name="last_name" type="VARCHAR(32)"/>
             <column name="name" type="VARCHAR(32)">
                 <constraints nullable="false"/>
             </column>
@@ -44,5 +44,16 @@
     </changeSet>
     <changeSet author="listpv (generated)" id="1609239565640-6">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles" constraintName="FKj6m8fwv7oqv74fcehir1a9ffy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles" validate="true"/>
+    </changeSet>
+
+    <changeSet author="listpv" id="1609239565640-7">
+        <sqlFile dbms="mysql"
+                 encoding="UTF-8"
+                 endDelimiter="\nGO"
+                 path="insert-default-users-roles.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+        <rollback/>
     </changeSet>
 </databaseChangeLog>
